@@ -101,17 +101,53 @@ body {
     font-style: italic;
     color: #888;
   }
-
-  /* Applied to <iframe id="ai-chat-sidebar"> */
+ 
   #ai-chat-sidebar {
-    width: 350px;
-    height: 100vh;
-    border: none;
-    z-index: 999999;
-    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.15);
-    background-color: #fff;
-    flex-shrink: 0;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 350px;
+  background-color: #ffffff;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  font-family: sans-serif;
+}
+
+/* Full height container inside the sidebar */
+#chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Scrollable message area */
+#chat-messages {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 10px;
+}
+
+/* Input area pinned to bottom */
+#chat-input-area {
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+  background-color: #fafafa;
+}
+
+#chat-input-area input {
+  flex-grow: 1;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+#chat-input-area button {
+  margin-left: 8px;
+  padding: 8px 12px;
+  font-size: 14px;
+  cursor: pointer;
+}
   
   
