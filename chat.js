@@ -54,22 +54,8 @@ document.getElementById('send-btn').addEventListener('click', async () => {
     return data.choices?.[0]?.message?.content || 'No response';
   }
 
-  document.getElementById('toggle-btn').addEventListener('click', () => {
-    const chatContainer = document.getElementById('chat-container');
-    const btn = document.getElementById('toggle-btn');
-    const iframe = window.frameElement;
-    const isCollapsed = iframe.style.width === '0px';
   
-    if (isCollapsed) {
-      iframe.style.width = '300px';
-      btn.textContent = '«';
-    } else {
-      iframe.style.width = '0px';
-      btn.textContent = '»';
-    }
-  });
-
-  const messagesContainer = document.getElementById('messages');
+const messagesContainer = document.getElementById('messages');
 const scrollBtn = document.getElementById('scroll-btn');
 
 // Show button when not at bottom
