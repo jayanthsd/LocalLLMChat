@@ -1,16 +1,24 @@
 (async function () {
-  //const SIDEBAR_ID = 'my-extension-sidebar';
-  const SIDEBAR_ID = 'ai-chat-sidebar'
+  const SIDEBAR_ID = 'ai-chat-sidebar';
   const WRAPPER_ID = 'my-extension-page-wrapper';
   const SIDEBAR_WIDTH = 300;
 
   if (document.getElementById(SIDEBAR_ID)) return;
 
-    const iframe = document.createElement('iframe');
-    iframe.src = chrome.runtime.getURL('chat.html');
-    iframe.id = 'ai-chat-sidebar-iframe';
-    iframe.className = 'collapsed'; // default state
-    document.body.appendChild(iframe);
+  const iframe = document.createElement('iframe');
+  iframe.src = chrome.runtime.getURL('chat.html');
+  iframe.id = 'ai-chat-sidebar-iframe';
+  iframe.style.cssText = `
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 0;
+    border: none;
+    z-index: 2147483647;
+    transition: width 0.3s ease;
+  `;
+  document.body.appendChild(iframe);
 
      // Create wrapper for the page content
   const wrapper = document.createElement('div');
@@ -45,7 +53,7 @@
   toggleBtn.style.cssText = `
     position: fixed;
     top: 50%;
-    right: 300px; /* match sidebar width */
+    right: 0;
     z-index: 10000; /* higher than iframe */
     width: 32px;
     height: 60px;
@@ -62,14 +70,15 @@
   // Toggle sidebar open/close
   toggleBtn.addEventListener('click', () => {
     const iframe = document.getElementById('ai-chat-sidebar-iframe');
-    if (iframe.classList.contains('open')) {
-      iframe.classList.remove('open');
-      toggleBtn.style.right = '0px';
-      toggleBtn.innerHTML = '>';
+    const isOpen = parseInt(iframe.style.width || '0', 10) > 0;
+    if (isOpen) {
+      iframe.style.width = '0';
+      toggleBtn.style.right = '0';
+      toggleBtn.textContent = '>';
     } else {
-      iframe.classList.add('open');
-      toggleBtn.style.right = '300px';
-      toggleBtn.innerHTML = '<';
+      iframe.style.width = SIDEBAR_WIDTH + 'px';
+      toggleBtn.style.right = SIDEBAR_WIDTH + 'px';
+      toggleBtn.textContent = '<';
     }
   });
 })();
