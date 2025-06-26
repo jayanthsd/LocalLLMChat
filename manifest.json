@@ -4,6 +4,7 @@
     "version": "1.0",
     "description": "A right-side chat window that interacts with an LLM.",
     "permissions": ["scripting", "activeTab", "storage"],
+    "options_page": "options.html",
     "action": {
       "default_icon": "icon.png",
       "default_title": "Open Chat"

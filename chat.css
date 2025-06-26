@@ -4,18 +4,48 @@ body {
     font-family: "Segoe UI", Roboto, sans-serif;
     height: 100%;
     background-color: #f0f2f5;
-  }
-  
-  /* Container layout */
-  #chat-container {
+}
+
+/* Main content adjustment */
+body.sidebar-open {
+    margin-right: 350px; /* Match sidebar width */
+    transition: margin-right 0.3s ease;
+}
+
+/* Sidebar container */
+#ai-chat-sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100vh;
+    width: 16px; /* Collapsed width */
+    background: #fff;
+    box-shadow: -4px 0 24px rgba(0,0,0,0.18);
+    border-top-left-radius: 12px;
+    border-bottom-left-radius: 12px;
+    z-index: 2147483647;
+    display: flex;
+    flex-direction: column;
+    transition: width 0.3s, box-shadow 0.3s;
+    overflow: visible; /* So toggle button is always visible */
+}
+
+#ai-chat-sidebar.open {
+    width: 300px; /* Expanded width */
+    box-shadow: -4px 0 24px rgba(0,0,0,0.18);
+    overflow: hidden; /* Hide overflow when open */
+}
+
+/* Container layout */
+#chat-container {
     display: flex;
     flex-direction: column;
     height: 100%;
     box-shadow: -2px 0 8px rgba(0, 0, 0, 0.2);
-  }
-  
-  /* Messages area */
-  #messages {
+}
+
+/* Messages area */
+#messages {
     flex-grow: 1;
     padding: 16px;
     overflow-y: auto;
@@ -23,10 +53,10 @@ body {
     display: flex;
     flex-direction: column;
     gap: 12px;
-  }
-  
-  /* Message styling */
-  .message {
+}
+
+/* Message styling */
+.message {
     max-width: 80%;
     padding: 12px 16px;
     border-radius: 16px;
@@ -34,37 +64,37 @@ body {
     line-height: 1.4;
     white-space: pre-wrap;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-  }
-  
-  .user {
+}
+
+.user {
     align-self: flex-end;
     background-color: #dcf8c6;
-  }
-  
-  .ai {
+}
+
+.ai {
     align-self: flex-start;
     background-color: #e8eaf6;
-  }
-  
-  /* Input area */
-  #input-container {
+}
+
+/* Input area */
+#input-container {
     display: flex;
     padding: 12px;
     border-top: 1px solid #ccc;
     background: #fff;
-  }
-  
-  #user-input {
-    flex-grow: 1;
+}
+
+#user-input {
+    flex-grow: 0;
     height: 48px;
     padding: 10px;
     resize: none;
     border-radius: 8px;
     border: 1px solid #ccc;
     font-size: 14px;
-  }
-  
-  #send-btn {
+}
+
+#send-btn {
     margin-left: 10px;
     padding: 0 20px;
     background-color: #007bff;
@@ -74,13 +104,13 @@ body {
     font-size: 14px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-  }
-  
-  #send-btn:hover {
-    background-color: #0056b3;
-  }
+}
 
-  #scroll-btn {
+#send-btn:hover {
+    background-color: #0056b3;
+}
+
+#scroll-btn {
     position: absolute;
     bottom: 80px;
     right: 20px;
@@ -95,59 +125,74 @@ body {
     display: none;
     z-index: 100;
     box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  }
-  
-  .loading {
+}
+
+.loading {
     font-style: italic;
     color: #888;
-  }
- 
-  #ai-chat-sidebar {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  width: 350px;
-  background-color: #ffffff;
-  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  font-family: sans-serif;
 }
 
 /* Full height container inside the sidebar */
 #chat-container {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 /* Scrollable message area */
 #chat-messages {
-  flex-grow: 1;
-  overflow-y: auto;
-  padding: 10px;
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 10px;
 }
 
 /* Input area pinned to bottom */
 #chat-input-area {
-  display: flex;
-  padding: 10px;
-  border-top: 1px solid #ccc;
-  background-color: #fafafa;
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+    background-color: #fafafa;
 }
 
 #chat-input-area input {
-  flex-grow: 1;
-  padding: 8px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+    flex-grow: 1;
+    padding: 8px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
 }
 
 #chat-input-area button {
-  margin-left: 8px;
-  padding: 8px 12px;
-  font-size: 14px;
-  cursor: pointer;
+    margin-left: 8px;
+    padding: 8px 12px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+#sidebar-toggle {
+    position: absolute;
+    top: 50%;
+    left: -20px;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 60px;
+    border-radius: 18px 0 0 18px;
+    background: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2147483648;
+    transition: left 0.3s;
+}
+
+#ai-chat-sidebar:not(.open) #chat-container,
+#ai-chat-sidebar:not(.open) .close-btn {
+    display: none;
 }
   
   

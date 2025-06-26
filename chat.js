@@ -36,16 +36,34 @@ document.getElementById('send-btn').addEventListener('click', async () => {
   
   
   async function callOpenAI(prompt) {
-    const apiKey = 'YOUR_OPENAI_API_KEY'; // Use Chrome Storage for safety in production
+    let llmUrlInput;
+    let llmApiKeyInput;
+    chrome.storage.local.get('llmUrlInput', (result) => {
+      llmUrlInput = result.llmUrlInput;
+      if (!llmUrlInput) {
+        return reject('LLM URL is not configured in extension options.');
+      }
+      console.log("Url: ", llmUrlInput);
+    });
+    
+    chrome.storage.local.get('llmApiKeyInput', (result) => {
+      llmApiKeyInput = result.llmApiKeyInput;
+      if(!llmApiKeyInput) {
+        return reject('LLM API Key is not configured in extension options.');
+      } 
+      console.log("ApiKey: ", llmApiKeyInput);
+    });
   
-    const res = await fetch("https://api.openai.com/v1/chat/completions", {
+    const url = "https://api.openai.com/v1/chat/completions";
+
+    const res = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${apiKey}`
+        "Authorization": `Bearer ${llmApiKeyInput}`
       },
       body: JSON.stringify({
-        model: "gpt-4", // or "gpt-3.5-turbo"
+        model: "gpt-4o-mini", // or "gpt-3.5-turbo"
         messages: [{ role: "user", content: prompt }]
       })
     });
@@ -107,5 +125,17 @@ document.getElementById('send-btn').addEventListener('click', async () => {
       appendMessage('AI', '⚠️ Error fetching response.');
     }
   });
+  
+document.addEventListener('DOMContentLoaded', () => {
+    const sidebar = document.getElementById('ai-chat-sidebar');
+    if (sidebar && !sidebar.querySelector('.close-btn')) {
+        const closeBtn = document.createElement('button');
+        closeBtn.className = 'close-btn';
+        closeBtn.innerHTML = '&times;';
+        closeBtn.onclick = toggleSidebar;
+        sidebar.appendChild(closeBtn);
+    }
+    // ...existing toggle button code...
+});
   
   
