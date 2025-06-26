@@ -27,6 +27,12 @@ Visit any webpage and click the extension's button to open the chat sidebar. Typ
 and press **Send**; the sidebar displays your conversation history and keeps the newest
 200 messages【F:chat.js†L25-L38】.
 
+## Chat Window - Active
+<img width="956" alt="sidebar-chat-img-1" src="https://github.com/user-attachments/assets/a9e47a26-2dc9-466a-80e7-1fc91ea8cd31" />
+
+## Chat Window - Collapsed
+<img width="959" alt="side-bar-chat-collapsed-img-1" src="https://github.com/user-attachments/assets/17239ccb-57f9-4d6f-9830-6699e547ff5d" />
+
 ## Development
 
 The project consists of HTML, CSS, and JavaScript files only; there is no build step. Update the
